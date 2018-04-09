@@ -2,24 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
-export default class Order extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-    };
-  }
-
-  render() {
+ const Order = props => {
     return (
       <div>
         <h3>Productos</h3>
+        {props.order.map((dish, index) => {
+          return(
+          <div key={index} className='row'>
+          <p>{dish.name}  <span>{dish.price}</span></p>
+          </div>)
+        }
 
-        <p>Enchiladas de Frijol $10,000</p>
+        )}
 
-        <p>Total: $ 10,000</p>
+        <p>Total:{props.total}</p>
       </div>
     );
-  }
-
 }
+
+Order.propTypes = {
+  order: PropTypes.arrayOf(PropTypes.object).isRequired,
+  total: PropTypes.number.isRequired,
+}
+
+export default Order;
