@@ -12,7 +12,7 @@ const Dishes = props => (
     */}
     {
       props.dishes[props.foodKey].map((dish) => (
-        <Dish key={dish.name} name={dish.name} image={dish.image} />
+        <Dish key={dish.name} name={dish.name} image={dish.image} price={dish.price} orderDish={props.orderDish}/>
       ))
     }
   </div>
@@ -21,6 +21,7 @@ const Dishes = props => (
 Dishes.propTypes = {
   foodKey: PropTypes.string.isRequired,
   dishes: PropTypes.object.isRequired,
+  orderDish: PropTypes.func.isRequired,
 }
 
 export default Dishes;

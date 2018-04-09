@@ -12,6 +12,8 @@ class App extends Component {
   	super(props);
   	this.state = {
       selectedFoodOption: 0,
+      total: 0,
+      order: [],
       food: [{
         breakfasts: [
           {image: 'https://www.goya.com/media/3805/huevos-rancheros.jpg?width=470', name: 'Huevos Rancheros', price: 35},
@@ -35,6 +37,7 @@ class App extends Component {
 
     this.getMenuOptions = this.getMenuOptions.bind(this);
     this.changeSelectedMenu = this.changeSelectedMenu.bind(this);
+    this.orderDish = this.orderDish.bind(this);
   }
 
   // Return the options of the menu in an array
@@ -61,18 +64,27 @@ class App extends Component {
     }
   }
 
+  orderDish(dish, price) {
+    const orderedDish = {name: dish, price: price};
+    this.state.order.push(orderedDish);
+    this.setState(this.state);
+    // console.log(this.state.order);
+    this.setState({total: this.state.total + price})
+  }
+
   render() {
     const menuOptions = this.getMenuOptions(this.state.food) // ['breakfasts', 'meals', 'dinners']
-
+    // console.log(this.state.food[this.state.selectedFoodOption]);
+    // console.log(menuOptions[this.state.selectedFoodOption]);
     return (
       <div className="App container">
         <div className="row">
           <div className="col-md-8 col-lg-8 col-sm-6">
             <Menu options={menuOptions} changeSelectedMenu={this.changeSelectedMenu} />
-            <Dishes dishes={this.state.food[this.state.selectedFoodOption]} foodKey={menuOptions[this.state.selectedFoodOption]} />
+            <Dishes dishes={this.state.food[this.state.selectedFoodOption]} foodKey={menuOptions[this.state.selectedFoodOption]} orderDish={this.orderDish}/>
           </div>
           <div className="col-md-4 col-lg-4 col-sm-6">
-            <Order />
+            <Order order={this.state.order} total={this.state.total}/>
           </div>
         </div>
       </div>
